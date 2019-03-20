@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#ff3259</color>
+    <color name="colorPrimaryDark">#ff3259</color>
+    <color name="colorAccent">#ff3259</color>
+
+    <color name="hint">#22000000</color>
+    <color name="color_33">#333333</color>
+    <color name="color_66">#666666</color>
+    <color name="color_99">#999999</color>
+    <color name="color_login_sel">#ff3259</color>
+
+    <color name="white">#ffffff</color>
+    <color name="color_e7">#e7e7e7</color>
+    <color name="color_btn1">#ff3259</color>
+
+</resources>

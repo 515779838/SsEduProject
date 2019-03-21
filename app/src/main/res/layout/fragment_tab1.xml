@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".fragment.Tab1Fragment">
 
     <include layout="@layout/view_actionbar" />
@@ -19,18 +19,20 @@
 
 
     <LinearLayout
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal">
 
 
         <LinearLayout
+            android:id="@+id/ll_slj"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="onClick"
             android:orientation="vertical">
 
             <ImageView
@@ -42,17 +44,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="四六级"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
+                android:text="四六级"
                 android:textColor="@color/color_33" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_tkzyk"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="onClick"
             android:orientation="vertical">
 
             <ImageView
@@ -71,10 +75,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_zmtzyk"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="onClick"
             android:orientation="vertical">
 
             <ImageView
@@ -94,10 +100,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_gkk"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="onClick"
             android:orientation="vertical">
 
             <ImageView
@@ -117,17 +125,19 @@
 
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
 
         <LinearLayout
+            android:id="@+id/ll_zyjy"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:onClick="onClick"
             android:orientation="vertical">
 
             <ImageView
@@ -146,6 +156,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="onClick"
+            android:id="@+id/ll_cglx"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -168,6 +180,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="onClick"
+            android:id="@+id/ll_xxzx"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -191,6 +205,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:onClick="onClick"
+            android:id="@+id/ll_yxfx"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -214,19 +230,18 @@
     </LinearLayout>
 
 
-
     <LinearLayout
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/home_img_left" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -239,6 +254,14 @@
         <ImageView
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/home_img_right" />
+
     </LinearLayout>
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="2" />
 </LinearLayout>

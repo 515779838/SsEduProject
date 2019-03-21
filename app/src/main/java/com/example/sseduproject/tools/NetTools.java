@@ -13,6 +13,7 @@ import com.example.sseduproject.constant.Constant;
 import com.google.gson.Gson;
 import com.hhkj.highschool.base.BaseActivity;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.builder.GetBuilder;
 import com.zhy.http.okhttp.builder.OtherRequestBuilder;
 import com.zhy.http.okhttp.builder.PostFormBuilder;
 import com.zhy.http.okhttp.callback.Callback;
@@ -55,6 +56,7 @@ public class NetTools {
         Log.e("zj", "net token = " + SPTools.INSTANCE.get(context, Constant.TOKEN, "").toString());
         String json = new Gson().toJson(map);
 
+        Log.e("zj","type = "+type);
         if (type.equals("post")) {
             //post请求
             PostFormBuilder builder = OkHttpUtils.post().url(url);
@@ -66,6 +68,18 @@ public class NetTools {
 
         } else if (type.equals("get")) {
             //get请求
+            GetBuilder builder = OkHttpUtils.get().url(url);
+            builder.addHeader(Constant.TOKEN, SPTools.INSTANCE.get(context, Constant.TOKEN, "").toString());
+
+
+            for(String s:map.keySet()){
+                builder.addParams(s,map.get(s));
+                           System.out.println("key : "+s+" value : "+map.get(s));
+                         }
+            Log.e("zj", "map = " + map.toString());
+
+            RequestCall call = builder.build();
+            callData(call,context, myCallBack, msg, true, true);
 
         } else if (type.equals("patch")||type.equals("delete")) {
             //patch请求,delete请求
@@ -118,6 +132,7 @@ public class NetTools {
                     Log.e("Exception gson：", e.toString());
                 }
                 ((BaseActivity) context).dismissProgressDialog();
+                Log.e("zj","1111 = "+e.toString());
             }
 
             @Override

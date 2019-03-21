@@ -14,4 +14,15 @@
     <color name="color_e7">#e7e7e7</color>
     <color name="color_btn1">#ff3259</color>
 
+    <color name="title_color">#E0E0E0</color>
+    <color name="view_line">#E8EFFA</color>
+    <color name="color_2c">#2c2c2c</color>
+    <color name="color_f7">#f7f7f7</color>
+    <color name="color_e5">#e5e5e5</color>
+    <color name="color_fe0002">#fe0002</color>
+
+    <color name="bg_tk">#40262626</color>
+    <color name="color_cc">#cccccc</color>
+
+
 </resources>

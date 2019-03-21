@@ -51,8 +51,12 @@ class ForgetPwActivity : BaseActivity() {
     }
 
     private fun net_common_verCode() {
+        if (et_phone.text.isEmpty()){
+            toast("手机号不能为空")
+            return
+        }
         val map = hashMapOf<String, String>()
-        map.put("phone", et_name.text.toString())
+        map.put("phone", et_phone.text.toString())
         NetTools.net("post",map, Urls.captcha, this) { response ->
             timeCount!!.start()
             toast(response.msg!!)
@@ -60,8 +64,21 @@ class ForgetPwActivity : BaseActivity() {
     }
 
     private fun net_forget_password() {
+        if (et_phone.text.isEmpty()){
+            toast("手机号不能为空")
+            return
+        }
+
+        if (et_code.text.isEmpty()){
+            toast("验证码不能为空")
+            return
+        }
+        if (et_pwd.text.isEmpty()){
+            toast("密码不能为空")
+            return
+        }
         val map = hashMapOf<String, String>()
-        map.put("phone", et_name.text.toString())
+        map.put("phone", et_phone.text.toString())
         map.put("captcha", et_code.text.toString())
         map.put("password", et_pwd.text.toString())
         NetTools.net("patch",map, Urls.forget_password, this) { response ->

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activity.SelectSchoolActivity">
+
+    <include layout="@layout/view_actionbar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/search_box_icon_search" />
+
+                </LinearLayout>
+
+
+                <EditText
+                    android:id="@+id/et_name"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:drawablePadding="8dp"
+                    android:hint="输入学院名称"
+                    android:lines="1"
+                    android:paddingLeft="12dp"
+                    android:paddingRight="8dp"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColor="@color/color_99"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/tv_cancle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/color_33" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_e7" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ListView
+                    android:id="@+id/lv_province"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_f7"
+                    android:divider="@android:color/transparent"
+                    android:scrollbars="none">
+
+                </ListView>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:id="@+id/ll_xx"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ListView
+                                android:id="@+id/lv_school"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:divider="@null"
+                                android:scrollbars="none" />
+
+                            <TextView
+                                android:id="@+id/dialog2"
+                                android:layout_width="80.0dip"
+                                android:layout_height="80.0dip"
+                                android:layout_gravity="center"
+
+                                android:gravity="center"
+                                android:textColor="#ffffffff"
+                                android:textSize="30.0dip"
+                                android:visibility="invisible" />
+
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right|center"
+                                android:layout_marginTop="40dp"
+                                android:layout_marginBottom="40dp"
+                                android:gravity="center"
+                                android:paddingTop="4dp"
+                                android:paddingRight="4dp"
+                                android:background="@drawable/background_sidebar"
+                                android:orientation="vertical">
+
+                                <com.example.sseduproject.view.SortNameListView.SideBar
+                                    android:id="@+id/sidrbarxx"
+                                    android:layout_width="30.0dip"
+                                    android:gravity="center"
+                                    android:layout_height="match_parent" />
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_xk"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/tv_2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginLeft="12dp"
+                                    android:layout_weight="1"
+                                    android:gravity="center_vertical"
+                                    android:lines="1"
+                                    android:singleLine="true"
+                                    android:textColor="@color/colorPrimary" />
+
+                                <ImageView
+                                    android:id="@+id/iv_del"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@mipmap/information_icon_cancel_selected" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2px"
+                                android:background="@color/colorPrimary" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <ListView
+                                    android:id="@+id/lv_xk"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:divider="@null"
+                                    android:scrollbars="none" />
+
+                                <TextView
+                                    android:id="@+id/dialog"
+                                    android:layout_width="80.0dip"
+                                    android:layout_height="80.0dip"
+                                    android:layout_gravity="center"
+
+                                    android:gravity="center"
+                                    android:textColor="#ffffffff"
+                                    android:textSize="30.0dip"
+                                    android:visibility="invisible" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right|center"
+                                    android:layout_marginTop="40dp"
+                                    android:layout_marginBottom="40dp"
+
+                                    android:background="@drawable/background_sidebar"
+                                    android:orientation="vertical">
+
+                                    <com.example.sseduproject.view.SortNameListView.SideBar
+                                        android:id="@+id/sidrbarxk"
+                                        android:layout_width="30.0dip"
+                                        android:layout_gravity="center"
+                                        android:layout_height="match_parent" />
+                                </LinearLayout>
+
+                            </FrameLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/lv_search"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:visibility="gone">
+
+            </ListView>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

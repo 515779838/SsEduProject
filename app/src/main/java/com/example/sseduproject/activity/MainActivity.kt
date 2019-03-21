@@ -12,10 +12,11 @@ import com.example.sseduproject.fragment.Tab1Fragment
 import com.example.sseduproject.fragment.Tab2Fragment
 import com.example.sseduproject.fragment.Tab3Fragment
 import com.example.sseduproject.fragment.Tab4Fragment
+import com.hhkj.highschool.base.BaseActivity
 import org.jetbrains.anko.toast
 import java.util.*
 
-class MainActivity : AppCompatActivity(), RadioGroup.OnCheckedChangeListener {
+class MainActivity : BaseActivity(), RadioGroup.OnCheckedChangeListener {
 
     private var mExitTime: Long = 0
 

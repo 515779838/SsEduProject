@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="44dp"
     android:background="@color/colorPrimary"
+
     android:translationZ="2dp">
 
     <TextView
@@ -29,7 +30,7 @@
             android:drawableLeft="@mipmap/toolbar_back"
             android:gravity="center_vertical"
             android:padding="8dp"
-            android:text="返回"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:visibility="gone" />

@@ -6,6 +6,7 @@ public class Constant {
     public static final String USERNAME = "username";// 登录用户名
     public static final String PASSWORD = "password";// 登陆密码
     public static final String TOKEN = "token";
+    public static final String ISLOGIN = "data_integrity";
     public static final String FLAG = "flag";
     public static final String YHXLH = "yhxlh";// 用户序列号（用户id）
     public static final String YHTX = "yhtx";// 头像（base64字符串）

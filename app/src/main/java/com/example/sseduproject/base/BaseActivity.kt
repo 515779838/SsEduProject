@@ -1,8 +1,17 @@
 package com.hhkj.highschool.base
 
+import android.app.Dialog
 import android.app.ProgressDialog
+import android.content.ContentResolver
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -12,15 +21,29 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.sseduproject.R
 import com.example.sseduproject.app.MyApp
+import com.example.sseduproject.view.SortNameListView.SortModel
 import org.jetbrains.anko.imageResource
 import org.jetbrains.anko.toast
+import java.io.BufferedOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 
 open class BaseActivity : BaseActivity2() {
+
+    var dialog: Dialog? = null
 
     var progressDialog: ProgressDialog? = null
 
     var pageIndex = 0
     var pageSize = 20
+
+    val requestCode_SysAlbum = 0
+    val requestCode_SysCamera = 1
+    val requestCode_CropPic = 2
+    var mStringphotoFile = ""
+    var mUriphotoFile: Uri? = null
+    var mUritempFile: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +52,9 @@ open class BaseActivity : BaseActivity2() {
 
     override fun onDestroy() {
         super.onDestroy()
+        if (dialog != null && dialog!!.isShowing) {
+            dialog!!.dismiss()
+        }
         MyApp.getActivies().remove(this)
     }
 
@@ -299,4 +325,161 @@ open class BaseActivity : BaseActivity2() {
 //        }
 //    }
 
+    /**
+     * 转换SideBar字母表
+     */
+    fun getStrs(SourceDateList: List<SortModel>): Array<String?> {
+        val strList = ArrayList<String>()
+        for (i in 0 until SourceDateList!!.size) {
+            if (i == 0) {
+                strList.add(SourceDateList!![i].sortLetters)
+            } else {
+                if (SourceDateList!![i].sortLetters != SourceDateList!![i - 1].sortLetters) {
+                    strList.add(SourceDateList!![i].sortLetters)
+                }
+            }
+        }
+        val strs = arrayOfNulls<String>(strList.size)
+        for (i in 0 until strList.size) {
+            strs[i] = strList[i]
+        }
+        return strs
+    }
+
+    /**
+     * 打开系统相册
+     */
+    fun openSysAlbum() {
+        val albumIntent = Intent(Intent.ACTION_PICK)
+        albumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*")
+        startActivityForResult(albumIntent, requestCode_SysAlbum)
+    }
+
+    /**
+     * 打开系统相机
+     */
+    fun openSysCamera() {
+        mStringphotoFile = Environment.getExternalStorageDirectory().absolutePath + "/small1.png"
+        mUriphotoFile = Uri.fromFile(File(mStringphotoFile))
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUriphotoFile)
+        startActivityForResult(cameraIntent, requestCode_SysCamera)
+    }
+
+    /**
+     * 读取照片exif信息中的旋转角度
+     * @param path 照片路径
+     * @return角度
+     */
+    fun readPictureDegree(path: String): Int {
+        var degree = 0
+        try {
+            val exifInterface = ExifInterface(path)
+            val orientation = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+            when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> degree = 90
+                ExifInterface.ORIENTATION_ROTATE_180 -> degree = 180
+                ExifInterface.ORIENTATION_ROTATE_270 -> degree = 270
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return degree
+    }
+
+    /**
+     * 旋转图片
+     */
+    fun toturn(img: Bitmap): Bitmap {
+        var img = img
+        val matrix = Matrix()
+        matrix.postRotate(+90f) /*翻转90度*/
+        val width = img.width
+        val height = img.height
+        img = Bitmap.createBitmap(img, 0, 0, width, height, matrix, true)
+        return img
+    }
+
+    /**
+     * bitmap保存图片
+     */
+    fun saveBitmapFile(filePath: String, bitmap: Bitmap) {
+        val file = File(filePath)
+        try {
+            val bos = BufferedOutputStream(FileOutputStream(file))
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
+            bos.flush()
+            bos.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+    }
+
+    /**
+     * 裁剪图片
+     *
+     * @param data
+     */
+    fun cropPic(fileName: String?,data: Uri?, aspectX: Int, aspectY: Int, outputX: Int, outputY: Int) {
+        if (data == null) {
+            return
+        }
+        val cropIntent = Intent("com.android.camera.action.CROP")
+        cropIntent.setDataAndType(data, "image/*")
+
+        // 开启裁剪：打开的Intent所显示的View可裁剪
+        cropIntent.putExtra("crop", "true")
+        // 裁剪宽高比
+        cropIntent.putExtra("aspectX", aspectX)
+        cropIntent.putExtra("aspectY", aspectY)
+        // 裁剪输出大小
+        cropIntent.putExtra("outputX", outputX)
+        cropIntent.putExtra("outputY", outputY)
+        cropIntent.putExtra("scale", true)
+        /**
+         * return-data
+         * 这个属性决定我们在 onActivityResult 中接收到的是什么数据，
+         * 如果设置为true 那么data将会返回一个bitmap
+         * 如果设置为false，则会将图片保存到本地并将对应的uri返回，当然这个uri得有我们自己设定。
+         * 系统裁剪完成后将会将裁剪完成的图片保存在我们所这设定这个uri地址上。我们只需要在裁剪完成后直接调用该uri来设置图片，就可以了。
+         */
+        // cropIntent.putExtra("return-data", true)
+        // 当 return-data 为 false 的时候需要设置这句
+        cropIntent.putExtra("return-data", false)
+        mUritempFile = Uri.parse("file://" + "/" + Environment.getExternalStorageDirectory().path + "/" + fileName+".jpg")
+        cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, mUritempFile)
+        // 图片输出格式
+        cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
+        // 头像识别 会启动系统的拍照时人脸识别
+        //        cropIntent.putExtra("noFaceDetection", true);
+        startActivityForResult(cropIntent, requestCode_CropPic)
+    }
+
+    /**
+     * 通过Uri获取文件路径
+     */
+    fun getRealFilePath(uri: Uri?): String {
+        if (null == uri) return ""
+        val scheme = uri.scheme
+        var data: String? = ""
+        if (scheme == null)
+            data = uri.path
+        else if (ContentResolver.SCHEME_FILE == scheme) {
+            data = uri.path
+        } else if (ContentResolver.SCHEME_CONTENT == scheme) {
+            val cursor = contentResolver.query(uri, arrayOf(MediaStore.Images.ImageColumns.DATA), null, null, null)
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    val index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
+                    if (index > -1) {
+                        data = cursor.getString(index)
+                    }
+                }
+                cursor.close()
+            }
+        }
+        return data!!
+    }
 }
